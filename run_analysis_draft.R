@@ -51,12 +51,27 @@
 			sum(x_test[ , c(means, sd, ncol(x_test) - 1, ncol(x_test))])))
 	q = c(q, !sum(set_means_sd[testrow, ] !=
 			x_train[testrow, c(ncol(x_train) - 1, ncol(x_train), means, sd)]))
-	q = c(q, !sum(set_means_sd[(nrow(x_train) + 1):nrow(complete_set), testcolumn] != 
+	q = c(q, !sum(set_means_sd[(nrow(x_train) + 1):nrow(set_means_sd), testcolumn] != 
 							x_test[ , testcolumn]))
 	subset = q
 	
-	names(set_means_sd)[1:2] = c('subject', 'activity')
-	qlist = list(merge = merge, subset = subset)
+	names(set_means_sd) = c('subject', 'activity',
+			as.character(features[means, 'V2']), as.character(features[sd, 'V2']))
+	
+	q = logical()
+	testcolumn = sample(colnames(set_means_sd), 1)
+	
+	
+	q = c(q, !sum(set_means_sd$subject[1 : nrow(subject_train)] != subject_train[ , 1]))
+	q = c(q, !sum(set_means_sd$subject[(nrow(subject_train) + 1) : nrow(set_means_sd)] != 
+					subject_test[ , 1]))
+	q = c(q, !sum(set_means_sd[1 : nrow(x_train), testcolumn] !=
+					x_train[ , which(features$V2 == testcolumn)]))
+	q = c(q, !sum(set_means_sd[(nrow(subject_train) + 1) : nrow(set_means_sd), testcolumn] !=
+					x_test[ , which(features$V2 == testcolumn)]))
+	relabel = q
+	
+	qlist = list(merge = merge, subset = subset, relabel = relabel)
 	print(qlist)
 	
 #colnames(complete_set)[562] = 'subject'
