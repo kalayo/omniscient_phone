@@ -14,8 +14,8 @@ complete_set = rbind(x_train, x_test)
 
 # Quality checks.
 print(identical(nrow(complete_set), nrow(x_train) + nrow(x_test)))
-print(identical(sum(complete_set[1:7352, ]), sum(x_train[ , ])))
-print(identical(sum(complete_set[7353:10299, ]), sum(x_test[ , ])))
+print(identical(sum(complete_set[1:nrow(x_train), ]), sum(x_train[ , ])))
+print(identical(sum(complete_set[(nrow(x_train) + 1):nrow(complete_set), ]), sum(x_test[ , ])))
 
 colnames(complete_set)[562] = 'subject'
 colnames(complete_set)[563] = 'activity'
