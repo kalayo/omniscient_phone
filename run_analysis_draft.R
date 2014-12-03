@@ -21,8 +21,8 @@
 	
 	q = logical()
 	q = c(q, identical(nrow(complete_set), nrow(x_train) + nrow(x_test)))
-	q = c(q, identical(sum(complete_set[1:nrow(x_train), ]), sum(x_train[ , ])))
-	q = c(q, identical(sum(complete_set[(nrow(x_train) + 1):nrow(complete_set), ]), sum(x_test[ , ])))
+	q = c(q, identical(sum(complete_set[1:nrow(x_train), ]), sum(x_train)))
+	q = c(q, identical(sum(complete_set[(nrow(x_train) + 1):nrow(complete_set), ]), sum(x_test)))
 	qlist = list(merge = q)
 	print(qlist)
 
