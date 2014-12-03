@@ -1,5 +1,6 @@
 # Requirements.
 
+	library(dplyr)
 
 # Read data.
 	subject_test = read.table(file = 'test/subject_test.txt')
@@ -12,24 +13,50 @@
 	x_train = read.table(file = 'train/x_train.txt')
 	x_train = data.frame(x_train, subject_train, y_train)
 
-	complete_set = rbind(x_train, x_test)
-	
 	features = read.table(file = 'features.txt')
 	
+	complete_set = rbind(x_train, x_test)
+	complete_set = as.tbl(complete_set)
 
 # Quality checks to verify integrity of data after merge.  q should be all true.
 	
 	q = logical()
+	testrow = sample(1:nrow(x_train), 1)
+	testcolumn = sample(colnames(complete_set), 1)
+	
 	q = c(q, identical(nrow(complete_set), nrow(x_train) + nrow(x_test)))
 	q = c(q, identical(sum(complete_set[1:nrow(x_train), ]), sum(x_train)))
 	q = c(q, identical(sum(complete_set[(nrow(x_train) + 1):nrow(complete_set), ]), sum(x_test)))
-	qlist = list(merge = q)
-	print(qlist)
-
+	q = c(q, !sum(complete_set[testrow, ] != x_train[testrow, ]))
+	q = c(q, !sum(complete_set[(nrow(x_train) + 1):nrow(complete_set), testcolumn] != 
+							x_test[ , testcolumn]))
+	merge = q
+	
 
 # Subset.
-set_means_sd = complete_set[ , c(562, 563)]
+	means = grep("-mean()", features$V2, fixed = T)
+	sd = grep("-std()", features$V2, fixed = T)
+	
+	set_means_sd = select(complete_set, ncol(complete_set) - 1, ncol(complete_set), means, sd)
 
+	q = logical()
+	testrow = sample(1:nrow(x_train), 1)
+	testcolumn = sample(colnames(set_means_sd), 1)
+	q = c(q, identical(length(means), length(sd)))
+	q = c(q, identical(nrow(set_means_sd), nrow(x_train) + nrow(x_test)))
+	q = c(q, identical(sum(set_means_sd[1:nrow(x_train), ]),
+			sum(x_train[ , c(means, sd, ncol(x_train) - 1, ncol(x_train))])))
+	q = c(q, identical(sum(set_means_sd[(nrow(x_train) + 1):nrow(set_means_sd), ]),
+			sum(x_test[ , c(means, sd, ncol(x_test) - 1, ncol(x_test))])))
+	q = c(q, !sum(set_means_sd[testrow, ] !=
+			x_train[testrow, c(ncol(x_train) - 1, ncol(x_train), means, sd)]))
+	q = c(q, !sum(set_means_sd[(nrow(x_train) + 1):nrow(complete_set), testcolumn] != 
+							x_test[ , testcolumn]))
+	subset = q
+	
+	qlist = list(merge = merge, subset = subset)
+	print(qlist)
+	
 #colnames(complete_set)[562] = 'subject'
 #colnames(complete_set)[563] = 'activity'
 
@@ -37,4 +64,4 @@ set_means_sd = complete_set[ , c(562, 563)]
 # Clean up workspace.
 rm('y_test', 'subject_test', 'x_test',
 	'y_train', 'subject_train', 'x_train',
-	'q')
+	'q', 'testrow', 'testcolumn', 'merge', 'subset')
