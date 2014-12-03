@@ -14,6 +14,7 @@
 	x_train = data.frame(x_train, subject_train, y_train)
 
 	features = read.table(file = 'features.txt')
+	activity = read.table(file = 'activity_labels.txt')
 	
 	complete_set = rbind(x_train, x_test)
 	complete_set = as.tbl(complete_set)
@@ -42,7 +43,7 @@
 	q = logical()
 	testrow = sample(1:nrow(x_train), 1)
 	testcolumn = sample(colnames(set_means_sd), 1)
-	q = c(q, identical(length(means), length(sd)))
+	q = c(q, identical(as.numeric(ncol(set_means_sd)), length(means) + length(sd) + 2))
 	q = c(q, identical(nrow(set_means_sd), nrow(x_train) + nrow(x_test)))
 	q = c(q, identical(sum(set_means_sd[1:nrow(x_train), ]),
 			sum(x_train[ , c(means, sd, ncol(x_train) - 1, ncol(x_train))])))
@@ -54,6 +55,7 @@
 							x_test[ , testcolumn]))
 	subset = q
 	
+	names(set_means_sd)[1:2] = c('subject', 'activity')
 	qlist = list(merge = merge, subset = subset)
 	print(qlist)
 	
