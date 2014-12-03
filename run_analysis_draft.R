@@ -2,7 +2,8 @@
 
 	library(dplyr)
 
-# Read data.
+
+# Read and merge data.
 	subject_test = read.table(file = 'test/subject_test.txt')
 	y_test = read.table(file = 'test/y_test.txt')
 	x_test = read.table(file = 'test/x_test.txt')
@@ -14,10 +15,11 @@
 	x_train = data.frame(x_train, subject_train, y_train)
 
 	features = read.table(file = 'features.txt')
-	activity = read.table(file = 'activity_labels.txt')
+	activity_labels = read.table(file = 'activity_labels.txt')
 	
 	complete_set = rbind(x_train, x_test)
 	complete_set = as.tbl(complete_set)
+
 
 # Quality checks to verify integrity of data after merge.  q should be all true.
 	
@@ -55,13 +57,19 @@
 							x_test[ , testcolumn]))
 	subset = q
 	
+
+# Relabel.
 	names(set_means_sd) = c('subject', 'activity',
 			as.character(features[means, 'V2']), as.character(features[sd, 'V2']))
+	set_means_sd = mutate(set_means_sd, activity = activity_labels[activity, 2])
 	
 	q = logical()
 	testcolumn = sample(colnames(set_means_sd), 1)
 	
-	
+	mutated_count = count(set_means_sd, activity, sort = T)
+	test_count = count(complete_set, V1.2, sort = T)
+	test_count[ , 1] = activity_labels[as.numeric(test_count$V1.2), 2]
+	q = c(q, !sum(test_count != mutated_count))
 	q = c(q, !sum(set_means_sd$subject[1 : nrow(subject_train)] != subject_train[ , 1]))
 	q = c(q, !sum(set_means_sd$subject[(nrow(subject_train) + 1) : nrow(set_means_sd)] != 
 					subject_test[ , 1]))
@@ -74,11 +82,11 @@
 	qlist = list(merge = merge, subset = subset, relabel = relabel)
 	print(qlist)
 	
-#colnames(complete_set)[562] = 'subject'
-#colnames(complete_set)[563] = 'activity'
-
 
 # Clean up workspace.
-rm('y_test', 'subject_test', 'x_test',
-	'y_train', 'subject_train', 'x_train',
-	'q', 'testrow', 'testcolumn', 'merge', 'subset')
+
+	rm('y_test', 'subject_test', 'x_test',
+			'y_train', 'subject_train', 'x_train',
+			'means', 'sd', 'q', 'testrow', 'testcolumn',
+			'merge', 'subset', 'relabel', 'test_count',
+			'mutated_count')
