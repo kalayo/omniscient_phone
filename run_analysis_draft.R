@@ -64,7 +64,7 @@
 	set_means_sd = mutate(set_means_sd, activity = activity_labels[activity, 2])
 	
 	q = logical()
-	testcolumn = sample(colnames(set_means_sd), 1)
+	testcolumn = sample(colnames(set_means_sd)[-c(1,2)], 1)
 	
 	mutated_count = count(set_means_sd, activity, sort = T)
 	test_count = count(complete_set, V1.2, sort = T)
