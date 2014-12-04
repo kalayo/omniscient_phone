@@ -61,18 +61,23 @@
 # Relabel.
 	names(set_means_sd) = c('subject', 'activity',
 			as.character(features[means, 'V2']), as.character(features[sd, 'V2']))
-	set_means_sd = mutate(set_means_sd, activity = activity_labels[activity, 2])
+	
 	
 	q = logical()
 	testcolumn = sample(colnames(set_means_sd)[-c(1,2)], 1)
+	q = c(q, !sum(set_means_sd$subject[1 : nrow(subject_train)] != subject_train[ , 1]))
+	q = c(q, !sum(set_means_sd$subject[(nrow(subject_train) + 1) : nrow(set_means_sd)] != 
+					subject_test[ , 1]))
+	q = c(q, !sum(set_means_sd$activity[1 : nrow(subject_train)] != y_train[ , 1]))
+	q = c(q, !sum(set_means_sd$activity[(nrow(subject_train) + 1) : nrow(set_means_sd)] != 
+					y_test[ , 1]))
+	
+	set_means_sd = mutate(set_means_sd, activity = activity_labels[activity, 2])
 	
 	mutated_count = count(set_means_sd, activity, sort = T)
 	test_count = count(complete_set, V1.2, sort = T)
 	test_count[ , 1] = activity_labels[as.numeric(test_count$V1.2), 2]
 	q = c(q, !sum(test_count != mutated_count))
-	q = c(q, !sum(set_means_sd$subject[1 : nrow(subject_train)] != subject_train[ , 1]))
-	q = c(q, !sum(set_means_sd$subject[(nrow(subject_train) + 1) : nrow(set_means_sd)] != 
-					subject_test[ , 1]))
 	q = c(q, !sum(set_means_sd[1 : nrow(x_train), testcolumn] !=
 					x_train[ , which(features$V2 == testcolumn)]))
 	q = c(q, !sum(set_means_sd[(nrow(subject_train) + 1) : nrow(set_means_sd), testcolumn] !=
@@ -82,7 +87,8 @@
 
 # Build final data set.
 	grouped_means = summarise_each(group_by(set_means_sd, activity, subject), funs(mean))
-	write.table(grouped_means, file = 'grouped_means.txt', row.names = F)
+	filename = paste('grouped_means_', format(Sys.Date(), format = '%d%m%Y'), '.txt', sep = '')
+	write.table(grouped_means, file = filename, row.names = F)
 	
 	testsubject = sample(unique(set_means_sd$subject), 1)
 	testactivity = sample(unique(set_means_sd$activity), 1)
@@ -95,8 +101,21 @@
 	q = identical(testmean, summarymean) 
 	qlist = list(merge = merge, subset = subset, relabel = relabel,
 					grouped_mean = q)
-	print(qlist)
+		
+
+#Final qc.  Compare with analysis run on 04 Dec 2014.
+	testdata = as.data.frame(grouped_means)
+	q = logical()
+	q = c(q, identical(dim(testdata), c(180L, 68L)))
+	q = c(q, !(abs(sum(testdata[-1]) - -2964.23)/2964.23 > 0.001))
+	q = c(q, !(abs(sum(testdata[6,-1]) - -41.15578)/41.15578 > 0.001))
+	q = c(q, !(abs(sum(testdata[ ,40]) - -171.4373)/171.4373 > 0.001))
+	final = q
 	
+	qlist = list(merge = merge, subset = subset, relabel = relabel,
+					grouped_means = q, final = final)
+	print(qlist)
+
 
 # Clean up workspace.
 
