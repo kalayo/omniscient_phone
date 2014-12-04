@@ -78,8 +78,22 @@
 	q = c(q, !sum(set_means_sd[(nrow(subject_train) + 1) : nrow(set_means_sd), testcolumn] !=
 					x_test[ , which(features$V2 == testcolumn)]))
 	relabel = q
+
+
+# Build final data set.
+	grouped_means = summarise_each(group_by(set_means_sd, activity, subject), funs(mean))
 	
-	qlist = list(merge = merge, subset = subset, relabel = relabel)
+	testsubject = sample(unique(set_means_sd$subject), 1)
+	testactivity = sample(unique(set_means_sd$activity), 1)
+	testcolumn = sample(colnames(set_means_sd), 1)
+	testmean = mean(set_means_sd[(set_means_sd$activity == testactivity &
+							set_means_sd$subject == testsubject), testcolumn][[1]])
+	testindex = grouped_means[['subject']] == testsubject & grouped_means[['activity']] == testactivity
+	summarymean = grouped_means[[testcolumn]][testindex]
+	
+	q = identical(testmean, summarymean) 
+	qlist = list(merge = merge, subset = subset, relabel = relabel,
+					grouped_mean = q)
 	print(qlist)
 	
 
