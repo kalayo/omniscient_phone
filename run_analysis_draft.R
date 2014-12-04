@@ -82,6 +82,7 @@
 
 # Build final data set.
 	grouped_means = summarise_each(group_by(set_means_sd, activity, subject), funs(mean))
+	write.table(grouped_means, file = 'grouped_means.txt', row.names = F)
 	
 	testsubject = sample(unique(set_means_sd$subject), 1)
 	testactivity = sample(unique(set_means_sd$activity), 1)
