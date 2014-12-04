@@ -78,11 +78,9 @@ grouped_qc = function() {
 }
 
 final_qc = function() {
-	testdata = as.data.frame(grouped_means)
 	q = logical()
-	q = c(q, identical(dim(testdata), c(180L, 68L)))
-	q = c(q, !(abs(sum(testdata[-1]) - -2964.23)/2964.23 > 0.001))
-	q = c(q, !(abs(sum(testdata[6,-1]) - -41.15578)/41.15578 > 0.001))
-	q = c(q, !(abs(sum(testdata[ ,40]) - -171.4373)/171.4373 > 0.001))
+	testdata = read.table(file = 'standard.txt', header = T)
+	currentdata = read.table(file = filename, header = T)
+	q = identical(currentdata, testdata)
 	final <<- q
 }
