@@ -4,19 +4,23 @@
 	source('quality_controls.R')
 
 
-# Read and merge data.
-	subject_test = read.table(file = 'test/subject_test.txt')
-	y_test = read.table(file = 'test/y_test.txt')
-	x_test = read.table(file = 'test/x_test.txt')
+# Download, read and merge data.
+	#data_set = 'https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip'
+	#download.file(data_set, dest = 'har_data.zip', method = 'curl')
+	#unzip('har_data.zip')
+	
+	subject_test = read.table(file = 'UCI HAR Dataset/test/subject_test.txt')
+	y_test = read.table(file = 'UCI HAR Dataset/test/y_test.txt')
+	x_test = read.table(file = 'UCI HAR Dataset/test/x_test.txt')
 	x_test = data.frame(x_test, subject_test, y_test)
 
-	subject_train = read.table(file = 'train/subject_train.txt')
-	y_train = read.table(file = 'train/y_train.txt')
-	x_train = read.table(file = 'train/x_train.txt')
+	subject_train = read.table(file = 'UCI HAR Dataset/train/subject_train.txt')
+	y_train = read.table(file = 'UCI HAR Dataset/train/y_train.txt')
+	x_train = read.table(file = 'UCI HAR Dataset/train/x_train.txt')
 	x_train = data.frame(x_train, subject_train, y_train)
 
-	features = read.table(file = 'features.txt')
-	activity_labels = read.table(file = 'activity_labels.txt')
+	features = read.table(file = 'UCI HAR Dataset/features.txt')
+	activity_labels = read.table(file = 'UCI HAR Dataset/activity_labels.txt')
 	
 	complete_set = rbind(x_train, x_test)
 	complete_set = as.tbl(complete_set)
@@ -68,4 +72,5 @@
 	rm('y_test', 'subject_test', 'x_test', 'filename', 'subset_qc',
 			'y_train', 'subject_train', 'x_train', 'grouped', 'final',
 			'means', 'sd', 'merge', 'subset', 'relabel', 'final_qc',
-			'recode', 'grouped_qc', 'merge_qc', 'recode_qc', 'relabel_qc')
+			'recode', 'grouped_qc', 'merge_qc', 'recode_qc', 'relabel_qc',
+			'data_set')
