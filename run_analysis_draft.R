@@ -78,9 +78,9 @@
 	write(paste('Analysis date: ', analysis_date), file = logfile, append = T)
 	write(paste('Output       : ', filename), file = logfile, append = T)
 	write(paste('Log file     : ', logfile), file = logfile, append = T)
-	write('\n\ngrouped_means[1:6, 1:5]\n',file = logfile, append = T)
-	write.table(grouped_means[1:6, 1:5],								# Produces a warning, ignore.
-					file = logfile, append = T)
+	write('\n\ngrouped_means[1:6, 1:4]\n',file = logfile, append = T)
+	write.table(grouped_means[1:6, 1:4],								# Produces a warning, ignore.
+					file = logfile, row.names = F, append = T)
 	write('\n\nQC results\n', file = logfile, append = T)
 	lapply(qlist, write, file = logfile, append = T)
 
