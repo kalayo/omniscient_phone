@@ -9,7 +9,8 @@
 	#data_set = 'https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip'
 	#download.file(data_set, dest = 'har_data.zip', method = 'curl')	# Data set.
 	#unzip('har_data.zip')
-	download_date = Sys.Date()												
+	download_date = Sys.Date()
+	analysis_date = Sys.time()												
 	
 	y_test = read.table(file = 'UCI HAR Dataset/test/y_test.txt')		# Test data.
 	x_test = read.table(file = 'UCI HAR Dataset/test/x_test.txt')
@@ -69,13 +70,20 @@
 	print(qlist)
 
 
-# Write high level log file.
+# Write a short, high level log file.
+# Appends to log file if it already exists.
 
-	msg = paste('Download/analysis date: ', download_date)
-	write(msg, file = 'run_analysis_log.txt', append = T)
-	write('\ngrouped_means[1:6, 1:5]\n', file = 'run_analysis_log.txt', append = T)
-	write.table(grouped_means[1:6, 1:5], file = 'run_analysis_log.txt', append = T)
-	write('\nQC results\n', file = 'run_analysis_log.txt', append = T)
+	logfile = paste('run_analysis_log_', format(download_date, format = '%d%m%Y'), '.txt', sep = '')
+	write(paste('\n\nDownload date: ', download_date), file = logfile, append = T)
+	write(paste('Analysis date: ', analysis_date), file = logfile, append = T)
+	write(paste('Output       : ', filename), file = logfile, append = T)
+	write(paste('Log file     : ', logfile), file = logfile, append = T)
+	write('\n\ngrouped_means[1:6, 1:5]\n',file = logfile, append = T)
+	write.table(grouped_means[1:6, 1:5],								# Produces a warning, ignore.
+					file = logfile, append = T)
+	write('\n\nQC results\n', file = logfile, append = T)
+	lapply(qlist, write, file = logfile, append = T)
+
 
 # Clean up workspace.
 
@@ -83,4 +91,4 @@
 			'y_train', 'subject_train', 'x_train', 'grouped', 'final',
 			'means', 'sd', 'merge', 'subset', 'relabel', 'final_qc',
 			'recode', 'grouped_qc', 'merge_qc', 'recode_qc', 'relabel_qc',
-			'data_set')
+			'data_set', 'analysis_date', 'download_date', 'logfile')
