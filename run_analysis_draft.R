@@ -1,4 +1,4 @@
-# Script
+# The following script builds a tidy dat
 	
 	library(dplyr)														# Requirements.
 	source('quality_controls.R')
@@ -15,12 +15,12 @@
 	subject_test = read.table(file = 'UCI HAR Dataset/test/subject_test.txt')
 	x_test = data.frame(x_test, subject_test, y_test)					
 
-	y_train = read.table(file = 'UCI HAR Dataset/train/y_train.txt')		# Training data.
+	y_train = read.table(file = 'UCI HAR Dataset/train/y_train.txt')	# Training data.
 	x_train = read.table(file = 'UCI HAR Dataset/train/x_train.txt')
 	subject_train = read.table(file = 'UCI HAR Dataset/train/subject_train.txt')
 	x_train = data.frame(x_train, subject_train, y_train)				
 
-	features = read.table(file = 'UCI HAR Dataset/features.txt')			# Additional files.
+	features = read.table(file = 'UCI HAR Dataset/features.txt')		# Additional files.
 	activity_labels = read.table(file = 'UCI HAR Dataset/activity_labels.txt')
 	
 	complete_set = rbind(x_train, x_test)								# Merge training and test data.
@@ -34,7 +34,7 @@
 	means = grep("-mean()", features$V2, fixed = T)
 	sd = grep("-std()", features$V2, fixed = T)
 	set_means_sd = select(complete_set, ncol(complete_set) - 1,
-								ncol(complete_set), means, sd)
+							ncol(complete_set), means, sd)
 	
 	subset_qc()															# QC after subset.
 	
@@ -43,12 +43,12 @@
 	
 	names(set_means_sd) = c('subject', 'activity',						# Relabel columns.
 			as.character(features[means, 'V2']),
-								as.character(features[sd, 'V2']))
+							as.character(features[sd, 'V2']))
 	
 	relabel_qc()														# QC after relabel.
 		
 	set_means_sd = mutate(set_means_sd, activity =						# Recode activities.
-								activity_labels[activity, 2])
+							activity_labels[activity, 2])
 	
 	recode_qc()															# QC after recode.
 	

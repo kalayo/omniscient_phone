@@ -1,6 +1,12 @@
-# Script.
+# The following script defines functions that perform quality control tests
+#		after every step of run_analysis.R.
+# Each function contains a battery of tests to verify data integrity.
+# Ideally, all tests should return TRUE, although a FALSE result
+#		will not prevent run_analysis.R from completing.
+# If future results are different from a past result (standard.txt),
+#		the script may identify the step at which results started to diverge.
 
-	merge = logical()
+	merge = logical()										# Lists to contain QC results.
 	subset = logical()
 	relabel = logical()
 	recode = logical()
@@ -9,6 +15,10 @@
 
 
 # QC after merging training and test data.
+# 1.  Test of consistency of number of observations.
+# 2.  High-level test of training and test data after merging.
+# 3.  Element by element comparison of a random row.
+# 4.  Element by element comparision of a random column.
 
 	merge_qc = function() {
 		q = logical()
@@ -25,7 +35,12 @@
 
 
 # QC after subsetting means and standard deviations.
-
+# 1. Test of consistency of number of variables.
+# 2. Test of consistency of number of observations.
+# 3. High-level test of training and test data after subsetting.
+# 4. Element by element comparison of a random row.
+# 5. Element by element comparision of a random column.
+	
 	subset_qc = function() {
 		q = logical()
 		testrow = sample(1:nrow(x_train), 1)
@@ -45,6 +60,7 @@
 	
 
 # QC after relabeling columns according to features.
+# Element by element comparison of activity and subject columns.
 
 	relabel_qc = function() {
 		q = logical()
@@ -59,6 +75,8 @@
 
 
 # QC after recoding activity according to activity_labels.
+# 1. Test of consistency of number of observations per activity.
+# 2. Element by element comparison of a random column. 
 
 	recode_qc = function() {
 		q = logical()
@@ -76,6 +94,7 @@
 	
 
 # QC after summarizing data by activity and subject.
+# Test of a random mean from summarise_each against the same mean obtained "manually."
 
 	grouped_qc = function() {
 		q = logical()
@@ -93,7 +112,7 @@
 
 
 # Final QC.
-# Compares current results with results from 04 Dec 2014.
+# Test of current results against results from 04 Dec 2014.
 
 	final_qc = function() {
 		q = logical()
