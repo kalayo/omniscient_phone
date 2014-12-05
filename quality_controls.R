@@ -1,4 +1,4 @@
-# The following script defines functions that perform quality control tests
+# The following script defines functions to perform quality control tests
 #		after every step of run_analysis.R.
 # Each function contains a battery of tests to verify data integrity.
 # Ideally, all tests should return TRUE, although a FALSE result
@@ -15,10 +15,10 @@
 
 
 # QC after merging training and test data.
-# 1.  Tests consistency of number of observations.
-# 2.  Tests, at high level, training and test data after merging.
-# 3.  Compares a random row element by element.
-# 4.  Compares a random column element by element.
+# 1. Tests consistency of number of observations.
+# 2. Tests, at high level, training and test data as merged.
+# 3. Compares a random row element by element.
+# 4. Compares a random column element by element.
 
 	merge_qc = function() {
 		q = logical()
@@ -37,7 +37,7 @@
 # QC after subsetting means and standard deviations.
 # 1. Tests consistency of number of variables.
 # 2. Tests consistency of number of observations.
-# 3. Tests, at high level, training and test data after subsetting.
+# 3. Tests, at high level, training and test data as subset.
 # 4. Compares a random row element by element.
 # 5. Compares a random column element by element.
 	
@@ -59,8 +59,8 @@
 	}
 	
 
-# QC after relabeling columns according to features.
-# Compares subject and activity columns element by element..
+# QC after relabeling columns according to features.txt.
+# Compares subject and activity columns element by element.
 
 	relabel_qc = function() {
 		q = logical()
@@ -74,9 +74,9 @@
 	}
 
 
-# QC after recoding activity according to activity_labels.
+# QC after recoding activity according to activity_labels.txt.
 # 1. Tests consistency of number of observations per activity.
-# 2. Compares a random column element by element.. 
+# 2. Compares a random column element by element. 
 
 	recode_qc = function() {
 		q = logical()

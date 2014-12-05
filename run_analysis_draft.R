@@ -8,7 +8,8 @@
 	
 	#data_set = 'https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip'
 	#download.file(data_set, dest = 'har_data.zip', method = 'curl')	# Data set.
-	#unzip('har_data.zip')												
+	#unzip('har_data.zip')
+	download_date = Sys.Date()												
 	
 	y_test = read.table(file = 'UCI HAR Dataset/test/y_test.txt')		# Test data.
 	x_test = read.table(file = 'UCI HAR Dataset/test/x_test.txt')
@@ -29,7 +30,7 @@
 	merge_qc()															# QC after merge.
 		
 
-# Subset means and standard deviations of variables.
+# Subset means and standard deviations.
 
 	means = grep("-mean()", features$V2, fixed = T)
 	sd = grep("-std()", features$V2, fixed = T)
@@ -39,7 +40,7 @@
 	subset_qc()															# QC after subset.
 	
 
-# Relabel and recode variables according to features and activity_labels.
+# Relabel and recode variables according to features.txt and activity_labels.txt.
 	
 	names(set_means_sd) = c('subject', 'activity',						# Relabel columns.
 			as.character(features[means, 'V2']),
@@ -47,7 +48,7 @@
 	
 	relabel_qc()														# QC after relabel.
 		
-	set_means_sd = mutate(set_means_sd, activity =						# Recode activities.
+	set_means_sd = mutate(set_means_sd, activity =						# Recode activity.
 							activity_labels[activity, 2])
 	
 	recode_qc()															# QC after recode.
@@ -56,17 +57,25 @@
 # Build final, tidy data set.
 	
 	grouped_means = summarise_each(group_by(set_means_sd, activity, subject), funs(mean))
-	filename = paste('grouped_means_', format(Sys.Date(), format = '%d%m%Y'), '.txt', sep = '')
+	filename = paste('grouped_means_', format(download_date, format = '%d%m%Y'), '.txt', sep = '')
 	write.table(grouped_means, file = filename, row.names = F)
 	
 	grouped_qc()														# QC after summary.
 	final_qc()															# Final QC.
 	
-	qlist = list(merge = merge, subset = subset,						# Assemble QC tests.
+	qlist = list(merge = merge, subset = subset,						# Assemble QC results.
 					relabel = relabel, recode = recode,
 					grouped_mean = grouped, final = final)
 	print(qlist)
 
+
+# Write high level log file.
+
+	msg = paste('Download/analysis date: ', download_date)
+	write(msg, file = 'run_analysis_log.txt', append = T)
+	write('\ngrouped_means[1:6, 1:5]\n', file = 'run_analysis_log.txt', append = T)
+	write.table(grouped_means[1:6, 1:5], file = 'run_analysis_log.txt', append = T)
+	write('\nQC results\n', file = 'run_analysis_log.txt', append = T)
 
 # Clean up workspace.
 
