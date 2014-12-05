@@ -82,7 +82,8 @@
 	write.table(grouped_means[1:6, 1:4],								# Produces a warning, ignore.
 					file = logfile, row.names = F, append = T)
 	write('\n\nQC results\n', file = logfile, append = T)
-	lapply(qlist, write, file = logfile, append = T)
+	qc = sapply(names(qlist),function(x) paste(x,paste(qlist[[x]],collapse=" ")))
+	write(qc, file = logfile, append = T)
 
 
 # Clean up workspace.
