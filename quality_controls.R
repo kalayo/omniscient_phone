@@ -4,7 +4,7 @@
 # Ideally, all tests should return TRUE, although a FALSE result
 #		will not prevent run_analysis.R from completing.
 # If future results are different from a past result (standard.txt),
-#		the script may identify the step at which results started to diverge.
+#		the script may help identify at which point results started to diverge.
 
 	merge = logical()										# Lists to contain QC results.
 	subset = logical()
@@ -15,10 +15,10 @@
 
 
 # QC after merging training and test data.
-# 1.  Test of consistency of number of observations.
-# 2.  High-level test of training and test data after merging.
-# 3.  Element by element comparison of a random row.
-# 4.  Element by element comparision of a random column.
+# 1.  Tests consistency of number of observations.
+# 2.  Tests, at high level, training and test data after merging.
+# 3.  Compares a random row element by element.
+# 4.  Compares a random column element by element.
 
 	merge_qc = function() {
 		q = logical()
@@ -35,11 +35,11 @@
 
 
 # QC after subsetting means and standard deviations.
-# 1. Test of consistency of number of variables.
-# 2. Test of consistency of number of observations.
-# 3. High-level test of training and test data after subsetting.
-# 4. Element by element comparison of a random row.
-# 5. Element by element comparision of a random column.
+# 1. Tests consistency of number of variables.
+# 2. Tests consistency of number of observations.
+# 3. Tests, at high level, training and test data after subsetting.
+# 4. Compares a random row element by element.
+# 5. Compares a random column element by element.
 	
 	subset_qc = function() {
 		q = logical()
@@ -60,7 +60,7 @@
 	
 
 # QC after relabeling columns according to features.
-# Element by element comparison of activity and subject columns.
+# Compares subject and activity columns element by element..
 
 	relabel_qc = function() {
 		q = logical()
@@ -75,8 +75,8 @@
 
 
 # QC after recoding activity according to activity_labels.
-# 1. Test of consistency of number of observations per activity.
-# 2. Element by element comparison of a random column. 
+# 1. Tests consistency of number of observations per activity.
+# 2. Compares a random column element by element.. 
 
 	recode_qc = function() {
 		q = logical()
@@ -94,7 +94,7 @@
 	
 
 # QC after summarizing data by activity and subject.
-# Test of a random mean from summarise_each against the same mean obtained "manually."
+# Tests a random mean from summarise_each against the same mean obtained "manually."
 
 	grouped_qc = function() {
 		q = logical()
@@ -112,7 +112,7 @@
 
 
 # Final QC.
-# Test of current results against results from 04 Dec 2014.
+# Tests current results against results from 04 Dec 2014.
 
 	final_qc = function() {
 		q = logical()
