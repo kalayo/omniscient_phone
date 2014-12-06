@@ -1,4 +1,37 @@
-# The following script builds a tidy dat
+# The following script builds a tidy, smaller data table
+#	from a large data set of measurements from cellphone sensors during daily human activities.
+#	Please refer to readme.MD and codebook.MD for more detailed information.
+#
+# Data integrity is tested after every major step.
+#	Quality control tests are defined and described in quality_controls.R
+# 
+# Requirements
+# 	dplyr package
+# 	quality_controls.R
+#
+# Inputs
+#	a downloaded data set that includes
+#		features.txt        : a key of variables contained in columns in x_*.txt
+#		activity_labels.txt : a key of activities coded in y_*.txt
+#
+#		test and training sets that each includes
+#			y_*.txt			: the activity being performed			
+#			x_*.txt			: measurements obtained during the activity
+#			subject_*.txt	: the person performing the activity in y_*.txt
+#
+# Analysis
+# 	1. Download data set, read and merge training and test data.
+# 	2. Subset columns, in the following order: activity, subject, means and standard deviations.
+# 	3. Relabel columns according to features.txt.
+#	4. Decode activity according to activity_labels.txt.
+#	5. Build a table of the mean of each variable in the subset, grouped by activity and subject.
+#	6. Write data table to file.
+#	7. Write log file.
+#
+# Outputs:
+#	date-stamped data table in txt
+# 	date-stamped high-level logfile in txt
+
 	
 	library(dplyr)														# Requirements.
 	source('quality_controls.R')
@@ -49,10 +82,10 @@
 	
 	relabel_qc()														# QC after relabel.
 		
-	set_means_sd = mutate(set_means_sd, activity =						# Recode activity.
+	set_means_sd = mutate(set_means_sd, activity =						# Decode activity.
 							activity_labels[activity, 2])
 	
-	recode_qc()															# QC after recode.
+	recode_qc()															# QC after decode.
 	
 	
 # Build final, tidy data set.
@@ -65,7 +98,7 @@
 	final_qc()															# Final QC.
 	
 	qlist = list(merge = merge, subset = subset,						# Assemble QC results.
-					relabel = relabel, recode = recode,
+					relabel = relabel, decode = recode,
 					grouped_mean = grouped, final = final)
 	print(qlist)
 
