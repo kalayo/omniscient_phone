@@ -39,9 +39,9 @@
 
 # Download, read and merge data.
 	
-	#data_set = 'https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip'
-	#download.file(data_set, dest = 'har_data.zip', method = 'curl')	# Data set.
-	#unzip('har_data.zip')
+	data_set = 'https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip'
+	download.file(data_set, dest = 'har_data.zip', method = 'curl')		# Data set.
+	unzip('har_data.zip')
 	download_date = Sys.Date()
 	analysis_date = Sys.time()												
 	
