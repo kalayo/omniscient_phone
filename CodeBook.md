@@ -17,6 +17,7 @@
 * The tidy data table of averages by activity and subject is written to a text file.
 * A high-level log file is written to a text file.
 * The workspace is cleaned up.
+
 #### Output
 * **_grouped_means_**
   * A text file that contains averages, by activity and by subject, of
