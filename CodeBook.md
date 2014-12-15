@@ -1,9 +1,13 @@
+#### Data set
+#### Analysis
+* The data set was programmatically downloaded as a zip file and unzipped in a local directory.
+* At each step of analysis, data integrity was checked using functions defined in _quality_controls.R_.
 #### Output
 * **_grouped_means_**
   * A text file that contains averages, by activity and by subject, of
     * Means of variables
     * Standard deviations of variables
-  * Variables are defined in the file _features.txt_ of the original data set
+  * Variables are defined in the _features.txt_ of the original data set
 * **_run_analysis_log_**
   * A high level log that contains
     * Download and analysis dates
