@@ -1,9 +1,5 @@
 #### Data set
 
-#### Variables
-* means of variables, identified by searching _features.txt_ for _-mean()_
-* standard deviations of variables, identified by searching _features.txt_ for _-std()_
-
 #### Programmatic analysis
 * The data set is downloaded as a zip file and unzipped in a local directory.
 * The three tables comprising test data are read and merged.
@@ -13,8 +9,8 @@
 * From the complete data set, a subset is extracted, containing, in this order,
   * subject
   * activity
-  * means of variables
-  * standard deviations of variables
+  * means of variables, using _-mean()_ as search pattern
+  * standard deviations of variables, _-std()_ as search pattern
 * The columns of the resulting data set are relabeled, using _features.txt_ as key.
 * The activities in the _activity_ column are decoded, using _activity_labels.txt_ as key.
 * Each column is averaged by activity and by subject into a new, tidy data set. 
@@ -25,9 +21,12 @@
 
 #### Output
 * **_grouped_means_**
-  * A text file that contains averages, by activity and by subject, of
-    * Means of variables
-    * Standard deviations of variables
+  * A text file that contains the following columns
+    * activity
+    * subject
+    * The following variables, averaged by activity and by subject
+      * Means of variables
+      * Standard deviations of variables
 * **_run_analysis_log_**
   * A high level log that contains
     * Download and analysis dates
