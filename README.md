@@ -1,12 +1,12 @@
-#### Files
+# Files
 
 * **_run_analysis.R_**
   * Downloads, merges and subsets data.
   * Data are measurements obtained from cellphone sensors during daily activities.
 * **_quality_controls.R_**
-  * Defines functions called from inside run_analysis.R to evaluate data integrity at each step of analysis.
+  * Defines functions called from inside _run_analysis.R_ to evaluate data integrity at each step of analysis.
 * **_CodeBook.md_**
-  * Details of data, variables and analysis steps.
+  * Details of the data set, the analysis and output files.
 * **_standard.txt_**
   * Output data from an analysis performed on 12.04.2014.
   * To test reproducibility, compare future runs to this data set.
