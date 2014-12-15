@@ -1,8 +1,3 @@
-* The repository contains
-  * R scripts to download, merge and subset data from experiments designed to teach cellphones to recognize human activities.  Creepy, I know. :-)
-  * Three output files from original and recent runs of analysis.
-  * CodeBook.md with details of the data set, the analysis and the output files.
-
 #### Files
 
 * **_run_analysis.R_**
