@@ -10,9 +10,9 @@
   * subject
   * activity
   * means of variables, using _-mean()_ as search pattern
-  * standard deviations of variables, _-std()_ as search pattern
-* The columns of the resulting data set are relabeled, using _features.txt_ as key.
-* The activities in the _activity_ column are decoded, using _activity_labels.txt_ as key.
+  * standard deviations of variables, _-std()_ as search pattern.
+* The columns of the resulting subset are relabeled, using _features.txt_ as key.
+* The activities in the subset are decoded, using _activity_labels.txt_ as key.
 * Each column is averaged by activity and by subject into a new, tidy data set. 
 * (At each step, data integrity is checked using functions defined in _quality_controls.R_.  Please see comments in _quality_controls.R_ for details.)
 * The tidy data table of averages by activity and subject is written to a text file.
@@ -26,10 +26,11 @@
     * subject
     * 33 columns, each column containing an average by activity and by subject of
       * means of variables
-      * standard deviations of variables
+      * standard deviations of variables.
+  * There are 180 rows, corresponding to 6 activities x 30 human subjects.
 * **_run_analysis_log_**
   * A high level log that contains
-    * Download and analysis dates
-    * File names of output and log files
-    * A small snippet of the output data table
-    * Quality control results
+    * download and analysis dates
+    * file names of output and log files
+    * a small snippet of the output data table
+    * quality control results.
