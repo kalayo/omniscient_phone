@@ -24,9 +24,9 @@
   * A text file that contains the following columns
     * activity
     * subject
-    * The following variables, averaged by activity and by subject
-      * Means of variables
-      * Standard deviations of variables
+    * 33 columns, each column containing an average by activity and by subject of
+      * means of variables
+      * standard deviations of variables
 * **_run_analysis_log_**
   * A high level log that contains
     * Download and analysis dates
