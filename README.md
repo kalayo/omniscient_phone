@@ -1,12 +1,13 @@
 # Files
 
+* **_CodeBook.md_**
+  * Details of the data set, the analysis and output files.
 * **_run_analysis.R_**
   * Downloads, merges, subsets and summarizes data.
   * Data are measurements obtained from cellphone sensors during daily human activities.
 * **_quality_controls.R_**
-  * Defines functions called from inside _run_analysis.R_ to evaluate data integrity at each step of analysis.
-* **_CodeBook.md_**
-  * Details of the data set, the analysis and output files.
+  * Defines functions to evaluate data integrity at each step of analysis.
+  * Functions are invoked in _run_analysis.R_.
 * **_standard.txt_**
   * Data table from an analysis performed on 12.04.2014--the "gold standard."
   * To test reproducibility, compare future runs to this data table.
