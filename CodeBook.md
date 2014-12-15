@@ -1,4 +1,5 @@
 #### Data set
+#### Variables
 #### Programmatic analysis
 * The data set is downloaded as a zip file and unzipped in a local directory.
 * The three tables comprising test data are read and merged.
@@ -12,8 +13,8 @@
   * standard deviations of variables, using _-std()_ as search pattern
 * The columns of the resulting data set are relabeled, using _features.txt_ as key.
 * The activities in the _activity_ column are decoded, using _activity_labels.txt_ as key.
-* Each column is then averaged by activity and by subject. 
-* _(At each step of analysis, data integrity is checked using functions defined in _quality_controls.R_.  Please see comments in _quality_controls.R_ for details.)_
+* Each column is averaged by activity and by subject into a new, tidy data set. 
+* (At each step, data integrity is checked using functions defined in _quality_controls.R_.  Please see comments in _quality_controls.R_ for details.)
 * The tidy data table of averages by activity and subject is written to a text file.
 * A high-level log file is written to a text file.
 * The workspace is cleaned up.
