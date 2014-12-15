@@ -4,6 +4,8 @@
   * Downloads, merges and subsets data from measurements obtained by cellphone sensors during daily activities.
 * **_quality_controls.R_**
   * Called from inside run_analysis.R to evaluate data integrity at each step of analysis.
+* **_CodeBook.md_**
+  * Details of data, variables and analysis steps.
 * **_standard.txt_**
   * Output data from an analysis performed on 12.04.2014.  To test reproducibility, compare future runs to this data set.
 * **_grouped_means_151202014.txt_**
