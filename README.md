@@ -1,5 +1,5 @@
 #### Description
-* Contains R scripts to download, merge and subset data from experiments designed to recognize human activities from cellphone data.
+* Contains R scripts to download, merge and subset data from experiments designed teach cellphones to recognize human activities.  Creepy, I know. :-)
 * Also contains three output files from original and recent runs of analysis.
 
 #### Files.
