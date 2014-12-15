@@ -1,7 +1,9 @@
 #### Data set
+
 #### Variables
 * means of variables, identified by searching _features.txt_ for _-mean()_
 * standard deviations of variables, identified by searching _features.txt_ for _-std()_
+
 #### Programmatic analysis
 * The data set is downloaded as a zip file and unzipped in a local directory.
 * The three tables comprising test data are read and merged.
