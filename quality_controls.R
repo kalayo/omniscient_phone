@@ -1,10 +1,10 @@
 # The following script defines functions to perform quality control tests
-#		after every step of run_analysis.R.
+#	after every step of run_analysis.R.
 # Each function contains a battery of tests to verify data integrity.
 # Ideally, all tests should return TRUE, although a FALSE result
-#		will not prevent run_analysis.R from completing.
+#	will not prevent run_analysis.R from completing.
 # If future results are different from a past result (standard.txt),
-#		the script may help identify at which point results started to diverge.
+#	the script may help identify at which point results started to diverge.
 
 	merge = logical()										# Lists to contain QC results.
 	subset = logical()
