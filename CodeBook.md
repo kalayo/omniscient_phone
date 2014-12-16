@@ -3,6 +3,11 @@
 * The data set has previously split into training and test data sets.
 * Training and test data each contain multiple files, of which only the following were used
   * **_x_test.txt_** and **_x_train.txt_**
+    * Contains measurements from cellphone sensors during daily human activities.
+  * **_y_test.txt_** and **_y_train.txt_**
+    * Contains the activity being performed during each experiment.
+  * **_subject_test.txt_** and **_subject_train.txt_**
+    * Contains the subject performing the activity.
 * For this analysis, only the following files were used:
   * **_features.txt_**
     * Contains variable names that correspond to columns in _x_test.txt_ and _x_train.txt_.
