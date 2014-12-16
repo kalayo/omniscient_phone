@@ -38,9 +38,9 @@
   * A text file that contains the following columns
     * activity
     * subject
-    * 33 columns, each column containing an average by activity and by subject of
-      * means of variables
-      * standard deviations of variables.
+    * 66 columns, each column containing an average by activity and by subject of
+      * means of variables (33 columns)
+      * standard deviations of variables (33 columns).
   * There are 180 rows, corresponding to 6 activities x 30 human subjects.
 * **_run_analysis_log_**
   * A high level log that contains
